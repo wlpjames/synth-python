@@ -13,12 +13,18 @@ void willsSine(float signal[], double complex *last, double complex omega, float
 	//got to make last a float!!!!!
 	for (int i = 0; i < bufferS; i++){
 
-	signal[i] = ((double) creal(last)) * volume;
+	signal[i] = ((double) creal(*last)) * volume;
 
-	last *= omega;
+	*last *= omega;
 	}
 
 	return;
+}
+
+float sign(float x)
+{
+	//copied from net
+	return (x > 0) - (x < 0);
 }
 
 void square(float signal[], double complex *last, double complex omega, float volume, int bufferS, float freq, int sampleRate) 
@@ -26,16 +32,12 @@ void square(float signal[], double complex *last, double complex omega, float vo
 	//got to make last a float!!!!!
 	for (int i = 0; i < bufferS; i++){
 
-	signal[i] = sign(((double) creal(last))) * volume;
+	signal[i] = sign( (float) ((double) creal(*last))) * volume;
 
-	last *= omega;
+	*last *= omega;
 	}
 
 	return;
 }
 
-float sign(num)
-{
-	//copied from net
-	return (x > 0) - (x < 0);
-}
+
